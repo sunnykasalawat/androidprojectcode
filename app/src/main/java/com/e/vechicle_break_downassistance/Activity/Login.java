@@ -1,4 +1,4 @@
-package com.e.vechicle_break_downassistance;
+package com.e.vechicle_break_downassistance.Activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
+
+import com.e.vechicle_break_downassistance.R;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
 private Button login;

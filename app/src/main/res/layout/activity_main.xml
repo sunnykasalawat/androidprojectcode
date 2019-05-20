@@ -13,7 +13,7 @@
     <ImageView
         android:src="@drawable/banana"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="400dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:paddingTop="20dp"
@@ -30,7 +30,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="Sign in"
+        android:shadowColor="#A8A8A8"
         android:id="@+id/btnsignin"
+        style="@style/MyCustomButton"
       />
     <Button
         android:layout_weight="1"
@@ -39,6 +41,7 @@
         android:layout_margin="10dp"
         android:text="Sign up"
         android:id="@+id/btnsignup"
-       />
+       style="@style/MyCustomButton"
+        />
     </LinearLayout>
 </LinearLayout>
