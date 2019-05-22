@@ -11,7 +11,7 @@
     <ImageView
         android:src="@drawable/banana"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="300dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:paddingTop="20dp"
