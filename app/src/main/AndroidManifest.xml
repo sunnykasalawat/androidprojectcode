@@ -10,8 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Dashboard"
-            android:label="@string/title_activity_dashboard"/>
+            android:name=".Dashboard">
+
+        </activity>
         <activity
             android:name=".Activity.Register" />
         <activity
