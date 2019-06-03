@@ -5,15 +5,15 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Dashboard"
+    tools:context=".Activity.Dashboard"
     android:background="@drawable/gradiant_background">
 
     <FrameLayout
         android:id="@+id/Dashboardframe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
 
 
     <android.support.design.widget.BottomNavigationView

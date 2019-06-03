@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Dashboard">
+            android:name=".Activity.Dashboard">
 
         </activity>
         <activity

@@ -1,5 +1,6 @@
 package com.e.vechicle_break_downassistance.Activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -35,7 +36,9 @@ private EditText usernamet,passwordt;
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.buttonlogin:
-          Validate();
+                Intent intent=new Intent(this,Dashboard.class);
+                startActivity(intent);
+                //Validate();
              break;
 
         }
