@@ -10,6 +10,6 @@ public interface UserAPI {
 
     @POST("Register")
     Call<String> add(@Body User user);
-    
+
 }
 
