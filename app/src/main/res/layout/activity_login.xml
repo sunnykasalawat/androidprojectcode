@@ -12,13 +12,13 @@
         android:id="@+id/relfl"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="20dp"
+    android:layout_marginTop="20sp"
     android:layout_centerHorizontal="true"
     >
     <ImageView
         android:src="@drawable/banana"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="300sp"
         />
 
 
@@ -34,11 +34,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_margin="20dp">
+        android:layout_margin="20sp">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="10sp"
             android:inputType="textEmailAddress"
             android:hint="Email"
             android:textColorHint="#000"
@@ -48,7 +48,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="10sp"
             android:inputType="textPassword"
             android:hint="Password"
             android:textColorHint="#000"
@@ -59,8 +59,8 @@
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:padding="12dp"
+            android:layout_margin="20sp"
+            android:padding="12sp"
             android:text="Login"
             android:textColor="#000"
            android:id="@+id/buttonlogin"
@@ -68,11 +68,11 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30sp"
+            android:layout_marginRight="30sp"
             android:text="No account yet? Create one"
             android:gravity="center"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:textColor="#000"
             />
     </LinearLayout>
