@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Basic Information"
+            android:text="Register"
             android:textSize="22dp"
             android:gravity="center"
             android:layout_margin="10dp" />
@@ -23,22 +23,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:textColorHint="#000"
-            android:hint="First Name"
-            android:textSize="22dp"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:textColorHint="#000"
-            android:hint="Middle Name"
-            android:textSize="22dp"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:textColorHint="#000"
-            android:hint="Last Name"
-            android:textSize="22dp"/>
+            android:hint="Full Name"
+            android:id="@+id/fullname"
+         />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,13 +36,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="gender"
-                android:textSize="22dp"/>
+                android:text="Gender" />
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:id="@+id/grp"
+            android:id="@+id/gender"
             android:textColor="#000"
             android:layout_margin="10dp"
             android:background="@null"
@@ -65,23 +52,26 @@
                 android:layout_height="wrap_content"
                 android:text="Male"
                 android:textColor="#000"
-                android:id="@+id/rbm"/>
+                android:id="@+id/rbmale"/>
             <RadioButton
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Female"
                 android:textColor="#000"
-                android:id="@+id/rbf"/>
-            <RadioButton
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Other"
-                android:textColor="#000"
-                android:id="@+id/rbo"/>
+                android:id="@+id/rbfemale"/>
+
         </RadioGroup>
         </LinearLayout>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="Phone"
+            android:textColorHint="#000"
+            android:inputType="number"
+            android:id="@+id/phone"
+          />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -89,8 +79,81 @@
             android:hint="Email"
             android:textColorHint="#000"
             android:inputType="textEmailAddress"
-            android:textSize="22dp"/>
+            android:id="@+id/email"
+          />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="Address"
+            android:textColorHint="#000"
+            android:id="@+id/address"
+     />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="Username"
+            android:textColorHint="#000"
+            android:id="@+id/username"
+     />
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="Password"
+            android:textColorHint="#000"
+            android:inputType="textPassword"
+            android:id="@+id/password"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="User Type"/>
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/usertype"
+            android:textColor="#000"
+            android:layout_margin="10dp"
+            >
+            <RadioButton
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Mechanic"
+                android:textColor="#000"
+                android:id="@+id/rdomechanic"/>
+            <RadioButton
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="User"
+                android:textColor="#000"
+                android:id="@+id/rdouser"/>
+        </RadioGroup>
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20sp"
+            android:padding="12sp"
+            android:text="Register"
+            android:textColor="#000"
+            android:id="@+id/btnregister"
+            style="@style/MyCustomButton"/>
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30sp"
+            android:layout_marginRight="30sp"
+            android:text="Already have an Account."
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="#000"
+            android:id="@+id/alhaveaccnt"
+            />
     </LinearLayout>
 
 
