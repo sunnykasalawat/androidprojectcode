@@ -1,18 +1,14 @@
-package com.e.vechicle_break_downassistance.Activity;
+package com.e.vechicle_break_downassistance.Activity.User;
 
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
-import com.e.vechicle_break_downassistance.Fragments.profile;
+import com.e.vechicle_break_downassistance.Fragments.User.profile;
 import com.e.vechicle_break_downassistance.R;
 
 public class Dashboard extends AppCompatActivity {

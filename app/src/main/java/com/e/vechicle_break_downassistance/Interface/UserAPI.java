@@ -1,5 +1,6 @@
 package com.e.vechicle_break_downassistance.Interface;
 
+import com.e.vechicle_break_downassistance.Model.Loginreq;
 import com.e.vechicle_break_downassistance.Model.UserCUD;
 
 import retrofit2.Call;
@@ -15,7 +16,7 @@ public interface UserAPI {
 
     @FormUrlEncoded
     @POST("login")
-    Call<String> login(@Field("username") String username, @Field("password") String password);
+    Call<Loginreq> login(@Field("username") String username, @Field("password") String password);
 
 }
 

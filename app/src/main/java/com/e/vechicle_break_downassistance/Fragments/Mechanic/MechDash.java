@@ -1,4 +1,4 @@
-package com.e.vechicle_break_downassistance.Fragments;
+package com.e.vechicle_break_downassistance.Fragments.Mechanic;
 
 
 import android.os.Bundle;
@@ -6,17 +6,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.e.vechicle_break_downassistance.R;
 
 
-public class profile extends Fragment {
-private ImageView imageview;
-private TextView Name;
+public class MechDash extends Fragment {
 
-    public profile() {
+
+    public MechDash() {
         // Required empty public constructor
     }
 
@@ -25,11 +22,7 @@ private TextView Name;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_profile, container, false);
-
-        imageview=view.findViewById(R.id.pivprofile);
-        Name=view.findViewById(R.id.ptvname);
-        return view;
+        return inflater.inflate(R.layout.fragment_mech_dash, container, false);
     }
 
 }

@@ -3,6 +3,7 @@ package com.e.vechicle_break_downassistance.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,7 +26,8 @@ import retrofit2.Response;
 public class Register extends AppCompatActivity implements  View.OnClickListener {
 private EditText fullname,phone,email,address,username,password;
 private RadioGroup gender,usertype;
-String gend,usertypes;
+
+
 
 private Button btnregister;
 private TextView login;
@@ -43,11 +45,25 @@ private TextView login;
         username=findViewById(R.id.username);
         password=findViewById(R.id.password);
         gender=findViewById(R.id.gender);
+
         usertype=findViewById(R.id.usertype);
         btnregister=findViewById(R.id.btnregister);
         btnregister.setOnClickListener(this);
 
         login=findViewById(R.id.alhaveaccnt);
+        gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                RadioButton radioButton=(RadioButton) radioGroup.findViewById(i);
+            }
+        });
+
+        usertype.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                RadioButton radioButton=(RadioButton) radioGroup.findViewById(i);
+            }
+        });
     }
 
 
@@ -56,30 +72,10 @@ private TextView login;
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btnregister:
+
             if(Validate()){
-                gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                        if(i==R.id.rbmale){
-
-                            gend="male";
-                        }else if(i==R.id.rbfemale){
-                            gend="female";
-                        }
-
-                    }
-                });
-
-                usertype.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                        if(i==R.id.rdomechanic){
-                            usertypes="mechanics";
-                        }else if(i==R.id.rdouser){
-                            usertypes="user";
-                        }
-                    }
-                });
+                RadioButton gend = (RadioButton) gender.findViewById(gender.getCheckedRadioButtonId());
+                RadioButton usertyp=(RadioButton) usertype.findViewById(usertype.getCheckedRadioButtonId());
 
                 String name=fullname.getText().toString();
                 String Phone=phone.getText().toString();
@@ -88,7 +84,9 @@ private TextView login;
                 String uname=username.getText().toString();
                 String pass=password.getText().toString();
 
-                UserCUD userCUD=new UserCUD(name,gend,Phone,Email,Address,uname,pass,usertypes);
+
+                UserCUD userCUD=new UserCUD(name,gend.getText().toString(),Phone,Email,Address,uname,pass,usertyp.getText().toString());
+
 
                 final UserAPI userAPI= Url.getInstance().create(UserAPI.class);
                 Call<String> voidcall=userAPI.add(userCUD);

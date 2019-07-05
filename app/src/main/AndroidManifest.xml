@@ -3,6 +3,7 @@
     package="com.e.vechicle_break_downassistance">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,23 +13,19 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".Activity.Dashboard">
-
-        </activity>
-        <activity
-            android:name=".Activity.Register" />
-        <activity
-            android:name=".Activity.Login" />
-        <activity
-            android:name=".Activity.splashing">
+            android:name=".Activity.Mechanic.Mechanicdash"
+            android:label="@string/title_activity_mechanicdash"></activity>
+        <activity android:name=".Activity.User.Dashboard"></activity>
+        <activity android:name=".Activity.Register" />
+        <activity android:name=".Activity.Login" />
+        <activity android:name=".Activity.splashing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Activity.MainActivity" />
+        <activity android:name=".Activity.MainActivity" />
     </application>
 
 </manifest>
