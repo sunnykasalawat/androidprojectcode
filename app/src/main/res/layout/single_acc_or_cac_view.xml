@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="200dp"
+    >
+    <ImageView
+        android:layout_margin="10dp"
+        android:id="@+id/img_sacv"
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        />
+    <TextView
+        android:id="@+id/tv_flnm_sacv"
+        android:layout_margin="10dp"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:layout_toRightOf="@+id/img_sacv"
+        android:text="Full name"
+        />
+    <TextView
+        android:layout_margin="10dp"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:id="@+id/tv_ad_sacv"
+        android:layout_toRightOf="@+id/img_sacv"
+        android:layout_below="@+id/tv_flnm_sacv"
+        android:text="Address"
+        />
+    <TextView
+        android:layout_margin="10dp"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:id="@+id/tv_ph_sacv"
+        android:layout_toRightOf="@+id/img_sacv"
+        android:text="Phone Number"
+        android:layout_below="@+id/tv_ad_sacv"
+        />
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:id="@+id/btn_Accept_sacv"
+        android:text="Complete"
+        android:layout_toRightOf="@+id/img_sacv"
+        android:layout_below="@+id/tv_ph_sacv"/>
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:id="@+id/btn_Cancel_sacv"
+        android:text="Cancle"
+        android:layout_toRightOf="@+id/img_sacv"
+        android:layout_below="@+id/btn_Accept_sacv"/>
+
+
+</RelativeLayout>

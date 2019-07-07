@@ -3,12 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.User.Mechanic_data">
-
+    tools:context=".Fragments.User.accept_or_cancel_view">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Request for hire"
+        android:text="Accept or Cancel"
         />
     <android.support.v7.widget.RecyclerView  xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -16,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".itemrecyclerviews"
-        android:id="@+id/mechanicdatarv">
+        android:id="@+id/acocalistdatarv">
 
     </android.support.v7.widget.RecyclerView>
 

@@ -1,5 +1,10 @@
 package com.e.vechicle_break_downassistance.Activity.User;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
@@ -8,12 +13,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.view.MenuItem;
 
+import com.e.vechicle_break_downassistance.Activity.Login;
 import com.e.vechicle_break_downassistance.Fragments.User.Mechanic_data;
+import com.e.vechicle_break_downassistance.Fragments.User.accept_or_cancel_view;
 import com.e.vechicle_break_downassistance.Fragments.User.profile;
 import com.e.vechicle_break_downassistance.R;
 
 public class Dashboard extends AppCompatActivity {
-
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +32,8 @@ public class Dashboard extends AppCompatActivity {
         Mechanic_data mec=new Mechanic_data();
         fragmentTransaction.replace(R.id.Userdashboardframe,mec);
         fragmentTransaction.commit();
+        preferences=getSharedPreferences("app", Context.MODE_PRIVATE);
+        editor=preferences.edit();
 
 
 
@@ -49,8 +59,37 @@ public class Dashboard extends AppCompatActivity {
                     fragmentTransaction.commit();
                     return true;
                 case R.id.navigation_dashboard:
+                    accept_or_cancel_view acv=new accept_or_cancel_view();
+                    fragmentTransaction.replace(R.id.Userdashboardframe,acv);
+                    fragmentTransaction.commit();
+
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_logout:
+                    AlertDialog.Builder builder=new AlertDialog.Builder(Dashboard.this);
+                    builder.setTitle("Log Out")
+                            .setMessage("Do you really want to Log out?")
+                            .setCancelable(false)
+                            .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    editor.remove("app");
+                                    editor.putBoolean("status",false)
+                                            .commit();
+                                    Intent intent=new Intent(getApplicationContext(), Login.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
+                                    finish();
+
+                                }
+                            })
+                            .setNegativeButton("no", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            });
+                    builder.show();
                     return true;
                 case R.id.navigation_profile:
                   profile pro=new profile();

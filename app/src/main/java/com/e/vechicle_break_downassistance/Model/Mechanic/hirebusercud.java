@@ -5,13 +5,22 @@ import com.e.vechicle_break_downassistance.Model.User.Mechanic_Data_GET;
 import java.util.List;
 
 public class hirebusercud {
-   private String mechanicid,hiredetail;
+   private String _id,mechanicid,hiredetail;
    private Mechanic_Data_GET Userid;
 
-    public hirebusercud(String mechanicid, String hiredetail, Mechanic_Data_GET userid) {
+    public hirebusercud(String _id, String mechanicid, String hiredetail, Mechanic_Data_GET userid) {
+        this._id = _id;
         this.mechanicid = mechanicid;
         this.hiredetail = hiredetail;
         Userid = userid;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getMechanicid() {

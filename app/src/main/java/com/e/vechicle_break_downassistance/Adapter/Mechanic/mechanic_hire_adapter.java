@@ -1,6 +1,9 @@
 package com.e.vechicle_break_downassistance.Adapter.Mechanic;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,15 +14,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.e.vechicle_break_downassistance.Activity.Mechanic.Mechanicdash;
+import com.e.vechicle_break_downassistance.Fragments.Mechanic.MechDash;
+import com.e.vechicle_break_downassistance.Interface.Mechanic.MechanicAPI;
 import com.e.vechicle_break_downassistance.Model.Mechanic.hirebusercud;
-import com.e.vechicle_break_downassistance.Model.User.Mechanic_Data_GET;
 import com.e.vechicle_break_downassistance.R;
+import com.e.vechicle_break_downassistance.URL.Url;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class mechanic_hire_adapter extends RecyclerView.Adapter<mechanic_hire_adapter.hiredata_viewholder>{
     List<hirebusercud> hirebusercuds;
     Context context;
+
 
     public mechanic_hire_adapter(List<hirebusercud> hirebusercuds, Context context) {
         this.hirebusercuds = hirebusercuds;
@@ -45,6 +56,48 @@ public class mechanic_hire_adapter extends RecyclerView.Adapter<mechanic_hire_ad
         hiredata_viewholder.accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String id=hirebusercudlist.get_id();
+
+                final MechanicAPI mechanicAPI= Url.getInstance().create(MechanicAPI.class);
+                Call<String> accept=mechanicAPI.accepthire(id);
+                accept.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        Toast.makeText(context,response.body(),Toast.LENGTH_LONG).show();
+                        Intent intent=new Intent(context, Mechanicdash.class);
+                        context.startActivity(intent);
+                        ((Activity)context).finish();
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                    }
+                });
+            }
+        });
+
+        hiredata_viewholder.cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String id=hirebusercudlist.get_id();
+
+                final MechanicAPI mechanicAPI= Url.getInstance().create(MechanicAPI.class);
+                Call<String> cancel=mechanicAPI.cancelhire(id);
+                cancel.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        Toast.makeText(context,response.body(),Toast.LENGTH_LONG).show();
+                        Intent intent=new Intent(context, Mechanicdash.class);
+                        context.startActivity(intent);
+                        ((Activity)context).finish();
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+
+                    }
+                });
 
             }
         });

@@ -1,19 +1,47 @@
 package com.e.vechicle_break_downassistance.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.e.vechicle_break_downassistance.Activity.Mechanic.Mechanicdash;
+import com.e.vechicle_break_downassistance.Activity.User.Dashboard;
 import com.e.vechicle_break_downassistance.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Button signin,signup;
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        preferences=getSharedPreferences("app", Context.MODE_PRIVATE);
+        editor=preferences.edit();
+        if(preferences.getBoolean("status",false)){
+            String usertype=preferences.getString("usertype","a");
+            Intent intent;
+            if (usertype.equals("User")) {
+                intent = new Intent(MainActivity.this, Dashboard.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+
+            }else if(usertype.equals("Mechanic")){
+                intent=new Intent(MainActivity.this, Mechanicdash.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+
+            }
+        }
 
         signin=findViewById(R.id.btnsignin);
         signin.setOnClickListener(this);
