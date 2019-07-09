@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.session.MediaSession;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.e.vechicle_break_downassistance.Busiiness_logic.Hiremechanic;
 import com.e.vechicle_break_downassistance.Interface.User.UserdashAPI;
 import com.e.vechicle_break_downassistance.Model.User.Hire_mechanic_cud;
 import com.e.vechicle_break_downassistance.Model.User.Mechanic_Data_GET;
@@ -71,38 +73,21 @@ public class Mechanic_data_adapter extends RecyclerView.Adapter<Mechanic_data_ad
             e.printStackTrace();
         }
 
-
-
-
-
         mechanic_data_viewholder.Hire.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
         String mechanicid=mechanic_data_get.get_id();
         String userid=preferences.getString("userid", "0");
 
-                Hire_mechanic_cud hire_mechanic_cud=new Hire_mechanic_cud(mechanicid,"Hire",userid);
+        Hire_mechanic_cud hire_mechanic_cud=new Hire_mechanic_cud(mechanicid,"Hire",userid);
+        Strictmode.StrictMode();
+        Hiremechanic hiremechanic=new Hiremechanic(hire_mechanic_cud);
+        if(hiremechanic.Hiremechanic()){
+            Toast.makeText(context,"Mechanic Hried",Toast.LENGTH_LONG).show();
+        }else{
 
-
-                final UserdashAPI userdashAPI= Url.getInstance().create(UserdashAPI.class);
-                Call<String> hircall=userdashAPI.hiremechanics(hire_mechanic_cud);
-
-                hircall.enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-
-                        Toast.makeText(context,response.body(),Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-                        Toast.makeText(context,"error",Toast.LENGTH_LONG).show();
-
-                    }
-                });
-
-
-
+            Toast.makeText(context,"Error",Toast.LENGTH_LONG).show();
+        }
             }
         });
 
