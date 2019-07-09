@@ -10,6 +10,8 @@ import android.widget.Button;
 import com.e.vechicle_break_downassistance.Activity.Mechanic.Mechanicdash;
 import com.e.vechicle_break_downassistance.Activity.User.Dashboard;
 import com.e.vechicle_break_downassistance.R;
+import com.e.vechicle_break_downassistance.Sensor.Accelerometer;
+import com.e.vechicle_break_downassistance.Sensor.Proximity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Button signin,signup;
@@ -20,8 +22,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        preferences=getSharedPreferences("app", Context.MODE_PRIVATE);
+        Proximity proximity=new Proximity(getApplicationContext());
+        proximity.proximity();
+//        Accelerometer accelerometer=new Accelerometer(getApplicationContext());
+//        if(accelerometer.accelerometer()){
+//            Intent intent=new Intent(MainActivity.this,MainActivity.class);
+//            startActivity(intent);
+//            finish();
+//    }
+       preferences=getSharedPreferences("app", Context.MODE_PRIVATE);
         editor=preferences.edit();
         if(preferences.getBoolean("status",false)){
             String usertype=preferences.getString("usertype","a");

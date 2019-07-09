@@ -17,8 +17,10 @@ import android.widget.TextView;
 import com.e.vechicle_break_downassistance.Activity.Login;
 import com.e.vechicle_break_downassistance.Activity.MainActivity;
 import com.e.vechicle_break_downassistance.Activity.User.Dashboard;
+import com.e.vechicle_break_downassistance.Fragments.Mechanic.Completedwork;
 import com.e.vechicle_break_downassistance.Fragments.Mechanic.MechDash;
 import com.e.vechicle_break_downassistance.R;
+import com.e.vechicle_break_downassistance.Sensor.Proximity;
 
 public class Mechanicdash extends AppCompatActivity {
 
@@ -41,6 +43,9 @@ public class Mechanicdash extends AppCompatActivity {
                     fragmentTransaction.commit();
                     return true;
                 case R.id.navigation_dashboard:
+                    Completedwork completedwork=new Completedwork();
+                    fragmentTransaction.replace(R.id.Mechashboardframe,completedwork);
+                    fragmentTransaction.commit();
                     return true;
                 case R.id.navigation_Logoutmc:
                     AlertDialog.Builder builder=new AlertDialog.Builder(Mechanicdash.this);
@@ -82,6 +87,8 @@ public class Mechanicdash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mechanicdash);
         BottomNavigationView navView = findViewById(R.id.nav_view);
+        Proximity proximity=new Proximity(getApplicationContext());
+        proximity.proximity();
         preferences=getSharedPreferences("app", Context.MODE_PRIVATE);
         editor=preferences.edit();
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);

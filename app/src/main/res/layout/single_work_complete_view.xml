@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="200dp"
+    >
+    <ImageView
+        android:layout_margin="10dp"
+        android:id="@+id/img_swcv"
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        />
+    <TextView
+        android:id="@+id/tv_flnm_swcv"
+        android:layout_margin="10dp"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:layout_toRightOf="@+id/img_swcv"
+        android:text="Full name"
+        />
+    <TextView
+        android:layout_margin="10dp"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:id="@+id/tv_ad_swcv"
+        android:layout_toRightOf="@+id/img_swcv"
+        android:layout_below="@+id/tv_flnm_swcv"
+        android:text="Address"
+        />
+    <TextView
+        android:layout_margin="10dp"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:id="@+id/tv_ph_swcv"
+        android:layout_toRightOf="@+id/img_swcv"
+        android:text="Phone Number"
+        android:layout_below="@+id/tv_ad_swcv"
+        />
+
+
+
+</RelativeLayout>

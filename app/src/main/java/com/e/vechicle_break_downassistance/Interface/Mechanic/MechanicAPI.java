@@ -24,4 +24,8 @@ public interface MechanicAPI {
     @PUT("cancelhiredata")
     Call<String> cancelhire(@Field("_id") String id);
 
+    @FormUrlEncoded
+    @POST("completedata")
+    Call<List<hirebusercud>> getcompletework(@Field("mechanicid") String mechanicid);
+
 }

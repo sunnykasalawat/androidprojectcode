@@ -18,6 +18,7 @@ import com.e.vechicle_break_downassistance.Busiiness_logic.Userlogin;
 import com.e.vechicle_break_downassistance.Interface.UserAPI;
 import com.e.vechicle_break_downassistance.Model.Loginreq;
 import com.e.vechicle_break_downassistance.R;
+import com.e.vechicle_break_downassistance.Sensor.Proximity;
 import com.e.vechicle_break_downassistance.Strictmode.Strictmode;
 import com.e.vechicle_break_downassistance.URL.Url;
 
@@ -38,6 +39,8 @@ private EditText usernamet,passwordt;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        Proximity proximity=new Proximity(getApplicationContext());
+        proximity.proximity();
         preferences=getApplicationContext().getSharedPreferences("app",Context.MODE_PRIVATE);
         editor=preferences.edit();
 

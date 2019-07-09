@@ -19,6 +19,7 @@ import com.e.vechicle_break_downassistance.Fragments.User.Mechanic_data;
 import com.e.vechicle_break_downassistance.Fragments.User.accept_or_cancel_view;
 import com.e.vechicle_break_downassistance.Fragments.User.profile;
 import com.e.vechicle_break_downassistance.R;
+import com.e.vechicle_break_downassistance.Sensor.Proximity;
 
 public class Dashboard extends AppCompatActivity {
     SharedPreferences preferences;
@@ -28,6 +29,8 @@ public class Dashboard extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+        Proximity proximity=new Proximity(getApplicationContext());
+        proximity.proximity();
         FragmentManager fragmentManager=getSupportFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         Mechanic_data mec=new Mechanic_data();
