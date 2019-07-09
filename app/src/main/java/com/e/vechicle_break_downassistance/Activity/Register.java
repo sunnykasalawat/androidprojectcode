@@ -1,5 +1,16 @@
 package com.e.vechicle_break_downassistance.Activity;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.CursorLoader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -7,18 +18,27 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.e.vechicle_break_downassistance.Busiiness_logic.registeruser;
 import com.e.vechicle_break_downassistance.Interface.UserAPI;
+import com.e.vechicle_break_downassistance.Model.Imagemodel;
 import com.e.vechicle_break_downassistance.Model.UserCUD;
 import com.e.vechicle_break_downassistance.R;
+import com.e.vechicle_break_downassistance.Strictmode.Strictmode;
 import com.e.vechicle_break_downassistance.URL.Url;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,11 +46,10 @@ import retrofit2.Response;
 public class Register extends AppCompatActivity implements  View.OnClickListener {
 private EditText fullname,phone,email,address,username,password;
 private RadioGroup gender,usertype;
-
-
-
+private ImageView profileimage;
 private Button btnregister;
 private TextView login;
+public String imagepath,imagenames;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +67,8 @@ private TextView login;
 
         usertype=findViewById(R.id.usertype);
         btnregister=findViewById(R.id.btnregister);
+        profileimage=findViewById(R.id.proimage_reg);
+        profileimage.setOnClickListener(this);
         btnregister.setOnClickListener(this);
 
         login=findViewById(R.id.alhaveaccnt);
@@ -70,57 +91,89 @@ private TextView login;
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btnregister:
 
-            if(Validate()){
-                RadioButton gend = (RadioButton) gender.findViewById(gender.getCheckedRadioButtonId());
-                RadioButton usertyp=(RadioButton) usertype.findViewById(usertype.getCheckedRadioButtonId());
+                if (Validate()) {
+                    RadioButton gend = (RadioButton) gender.findViewById(gender.getCheckedRadioButtonId());
+                    RadioButton usertyp = (RadioButton) usertype.findViewById(usertype.getCheckedRadioButtonId());
 
-                String name=fullname.getText().toString();
-                String Phone=phone.getText().toString();
-                String Email=email.getText().toString();
-                String Address=address.getText().toString();
-                String uname=username.getText().toString();
-                String pass=password.getText().toString();
+                    String name = fullname.getText().toString();
+                    String Phone = phone.getText().toString();
+                    String Email = email.getText().toString();
+                    String Address = address.getText().toString();
+                    String uname = username.getText().toString();
+                    String pass = password.getText().toString();
+                    SaveimageOnly();
+                    UserCUD userCUD = new UserCUD(name, gend.getText().toString(), Phone, Email, Address, uname, pass, usertyp.getText().toString(),imagenames);
+                    Strictmode.StrictMode();
+                    registeruser reg = new registeruser(userCUD);
+                   if( reg.registerusers()){
+                       Toast.makeText(getApplicationContext(),"Login Successfull",Toast.LENGTH_LONG).show();
+                   }else{
 
+                       Toast.makeText(getApplicationContext(),"Error in Login",Toast.LENGTH_LONG).show();
+                   }
+                }
+                break;
+            case  R.id.proimage_reg:
+                int permissionCheck= ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
 
-                UserCUD userCUD=new UserCUD(name,gend.getText().toString(),Phone,Email,Address,uname,pass,usertyp.getText().toString());
+                if(permissionCheck!= PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
+                }
+                open();
 
+                break;
+        }
+    }
 
-                final UserAPI userAPI= Url.getInstance().create(UserAPI.class);
-                Call<String> voidcall=userAPI.add(userCUD);
-                voidcall.enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        if(!response.isSuccessful()){
-                            Toast.makeText(getApplicationContext(),response.errorBody().toString(),Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                        String result=response.body();
+    private void open(){
+        Intent gallery=new Intent(Intent.ACTION_PICK);
+        gallery.setType("image/*");
+        startActivityForResult(gallery,0);
+    }
 
-                        if(result.equals("Username already exist")){
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if( resultCode==RESULT_OK && requestCode==0){
 
-                            Toast.makeText(getApplicationContext(),"Username already exist",Toast.LENGTH_LONG).show();
-                        }else{
-                            Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG).show();
-                        }
-                    }
+            if(data==null){
+                Toast.makeText(this,"Please enter an image",Toast.LENGTH_LONG).show();
 
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
+            }
+            else {
 
-                    }
-                });
-
-
+                Uri uri=data.getData();
+                imagepath=getRealPathfromURI(uri);
+                previewImage(imagepath);
             }
         }
 
     }
 
+    private String getRealPathfromURI(Uri uri) {
+        String[] projection={MediaStore.Images.Media.DATA};
+        CursorLoader loader=new CursorLoader(this,uri,
+                projection,null,null,null);
+        Cursor cursor=loader.loadInBackground();
+        int colindex=cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String result=cursor.getString(colindex);
+        cursor.close();
+        return result;
+    }
+    private void previewImage(String imagepath) {
+        File imgfile = new File(imagepath);
+        if (imgfile.exists()) {
+            Bitmap myBitmap = BitmapFactory.decodeFile(imgfile.getAbsolutePath());
+            profileimage.setImageBitmap(myBitmap);
 
-    private boolean Validate() {
+        }
+    }
+
+    private boolean Validate(){
 
         if(TextUtils.isEmpty(fullname.getText().toString())){
             fullname.setError("Enter yout Fullname");
@@ -156,4 +209,33 @@ private TextView login;
 
         }
     }
+    private void SaveimageOnly(){
+        if(imagepath.isEmpty()){
+            Toast.makeText(this, "please select image", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        File file = new File(imagepath);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"),file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("imageFile",file.getName(),requestBody);
+
+        System.out.println(imagepath);
+        UserAPI userAPI= Url.getInstance().create(UserAPI.class);
+        Call<Imagemodel> responseBodycall=userAPI.UploadImage(body);
+
+        Strictmode.StrictMode();
+
+        try {
+            Response<Imagemodel>   imagemodelResponse = responseBodycall.execute();
+
+            imagenames=imagemodelResponse.body().getFilename();
+
+
+        } catch (IOException e) {
+            Toast.makeText(this, "Error uploading image", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+
+
+    }
+
 }

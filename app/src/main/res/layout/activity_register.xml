@@ -134,6 +134,14 @@
                 android:textColor="#000"
                 android:id="@+id/rdouser"/>
         </RadioGroup>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            app:srcCompat="@drawable/ic_launcher_foreground"
+            android:id="@+id/proimage_reg"/>
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

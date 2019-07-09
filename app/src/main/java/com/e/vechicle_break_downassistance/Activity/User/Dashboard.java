@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.view.MenuItem;
 
 import com.e.vechicle_break_downassistance.Activity.Login;
+import com.e.vechicle_break_downassistance.Activity.MainActivity;
 import com.e.vechicle_break_downassistance.Fragments.User.Mechanic_data;
 import com.e.vechicle_break_downassistance.Fragments.User.accept_or_cancel_view;
 import com.e.vechicle_break_downassistance.Fragments.User.profile;
@@ -75,7 +76,7 @@ public class Dashboard extends AppCompatActivity {
                                     editor.remove("app");
                                     editor.putBoolean("status",false)
                                             .commit();
-                                    Intent intent=new Intent(getApplicationContext(), Login.class);
+                                    Intent intent=new Intent(getApplicationContext(), MainActivity.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(intent);

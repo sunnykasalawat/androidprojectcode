@@ -1,9 +1,9 @@
 package com.e.vechicle_break_downassistance.Model;
 
 public class UserCUD {
-private String fullname,gender,phone,email,address,username,password,usertype;
+private String fullname,gender,phone,email,address,username,password,usertype,profilepic;
 
-    public UserCUD(String fullname, String gender, String phone, String email, String address, String username, String password, String usertype) {
+    public UserCUD(String fullname, String gender, String phone, String email, String address, String username, String password, String usertype, String profilepic) {
         this.fullname = fullname;
         this.gender = gender;
         this.phone = phone;
@@ -12,6 +12,7 @@ private String fullname,gender,phone,email,address,username,password,usertype;
         this.username = username;
         this.password = password;
         this.usertype = usertype;
+        this.profilepic = profilepic;
     }
 
     public String getFullname() {
@@ -76,5 +77,13 @@ private String fullname,gender,phone,email,address,username,password,usertype;
 
     public void setUsertype(String usertype) {
         this.usertype = usertype;
+    }
+
+    public String getProfilepic() {
+        return profilepic;
+    }
+
+    public void setProfilepic(String profilepic) {
+        this.profilepic = profilepic;
     }
 }
