@@ -6,6 +6,8 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
@@ -29,6 +31,7 @@ import com.e.vechicle_break_downassistance.Interface.UserAPI;
 import com.e.vechicle_break_downassistance.Model.Imagemodel;
 import com.e.vechicle_break_downassistance.Model.UserCUD;
 import com.e.vechicle_break_downassistance.R;
+import com.e.vechicle_break_downassistance.Sensor.Accelerometer;
 import com.e.vechicle_break_downassistance.Strictmode.Strictmode;
 import com.e.vechicle_break_downassistance.URL.Url;
 
@@ -50,11 +53,27 @@ private ImageView profileimage;
 private Button btnregister;
 private TextView login;
 public String imagepath,imagenames;
+    private SensorManager manager;
+    private Sensor mAccelerometer;
+    private Accelerometer accelerometer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        manager = (SensorManager) getApplicationContext().getSystemService(SENSOR_SERVICE);
+        mAccelerometer=manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
+        accelerometer=new Accelerometer(getApplicationContext());
+
+        accelerometer.setOnShakeListener(new Accelerometer.OnShakeListener() {
+            @Override
+            public void onShake(int count) {
+                Intent intent=new Intent(Register.this,Register.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
         fullname=findViewById(R.id.fullname);

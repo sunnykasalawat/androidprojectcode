@@ -3,6 +3,8 @@ package com.e.vechicle_break_downassistance.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +20,7 @@ import com.e.vechicle_break_downassistance.Busiiness_logic.Userlogin;
 import com.e.vechicle_break_downassistance.Interface.UserAPI;
 import com.e.vechicle_break_downassistance.Model.Loginreq;
 import com.e.vechicle_break_downassistance.R;
+import com.e.vechicle_break_downassistance.Sensor.Accelerometer;
 import com.e.vechicle_break_downassistance.Sensor.Proximity;
 import com.e.vechicle_break_downassistance.Strictmode.Strictmode;
 import com.e.vechicle_break_downassistance.URL.Url;
@@ -32,6 +35,11 @@ private EditText usernamet,passwordt;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     Loginreq loginreq;
+    private SensorManager manager;
+    private Sensor mAccelerometer;
+    private Accelerometer accelerometer;
+
+
 
 
     @Override
@@ -41,6 +49,19 @@ private EditText usernamet,passwordt;
 
         Proximity proximity=new Proximity(getApplicationContext());
         proximity.proximity();
+        manager = (SensorManager) getApplicationContext().getSystemService(SENSOR_SERVICE);
+        mAccelerometer=manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+        accelerometer=new Accelerometer(getApplicationContext());
+
+        accelerometer.setOnShakeListener(new Accelerometer.OnShakeListener() {
+            @Override
+            public void onShake(int count) {
+                Intent intent=new Intent(Login.this,Login.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         preferences=getApplicationContext().getSharedPreferences("app",Context.MODE_PRIVATE);
         editor=preferences.edit();
 

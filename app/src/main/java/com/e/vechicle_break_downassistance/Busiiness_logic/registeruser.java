@@ -23,7 +23,7 @@ public class registeruser {
 
         try {
             Response<String> registerResponse=registerres.execute();
-            if(registerResponse.body().equals("Username already exist")){
+            if(!registerResponse.body().equals("Username already exist")){
                 valreturn=true;
             }
         } catch (IOException e) {

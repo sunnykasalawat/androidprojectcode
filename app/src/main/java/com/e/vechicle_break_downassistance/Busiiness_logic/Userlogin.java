@@ -27,7 +27,7 @@ public class Userlogin {
         Call<Loginreq> loginreqCall=userAPI.login(username,password);
 
         try {
-            Response<Loginreq>   loginreqResponse = loginreqCall.execute();
+            Response<Loginreq>  loginreqResponse = loginreqCall.execute();
              loginreq=loginreqResponse.body();
         } catch (IOException e) {
             e.printStackTrace();

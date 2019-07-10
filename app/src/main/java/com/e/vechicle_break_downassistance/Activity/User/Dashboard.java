@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
@@ -19,11 +21,16 @@ import com.e.vechicle_break_downassistance.Fragments.User.Mechanic_data;
 import com.e.vechicle_break_downassistance.Fragments.User.accept_or_cancel_view;
 import com.e.vechicle_break_downassistance.Fragments.User.profile;
 import com.e.vechicle_break_downassistance.R;
+import com.e.vechicle_break_downassistance.Sensor.Accelerometer;
 import com.e.vechicle_break_downassistance.Sensor.Proximity;
 
 public class Dashboard extends AppCompatActivity {
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
+    private SensorManager manager;
+    private Sensor mAccelerometer;
+    private Accelerometer accelerometer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +38,19 @@ public class Dashboard extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
         Proximity proximity=new Proximity(getApplicationContext());
         proximity.proximity();
+        manager = (SensorManager) getApplicationContext().getSystemService(SENSOR_SERVICE);
+        mAccelerometer=manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+        accelerometer=new Accelerometer(getApplicationContext());
+
+        accelerometer.setOnShakeListener(new Accelerometer.OnShakeListener() {
+            @Override
+            public void onShake(int count) {
+                Intent intent=new Intent(Dashboard.this,Dashboard.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         FragmentManager fragmentManager=getSupportFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         Mechanic_data mec=new Mechanic_data();

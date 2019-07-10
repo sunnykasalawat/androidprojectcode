@@ -2,10 +2,13 @@ package com.e.vechicle_break_downassistance.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.e.vechicle_break_downassistance.Activity.Mechanic.Mechanicdash;
 import com.e.vechicle_break_downassistance.Activity.User.Dashboard;
@@ -17,6 +20,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button signin,signup;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
+    private SensorManager manager;
+    private Sensor mAccelerometer;
+    private  Accelerometer accelerometer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,12 +30,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         Proximity proximity=new Proximity(getApplicationContext());
         proximity.proximity();
-//        Accelerometer accelerometer=new Accelerometer(getApplicationContext());
-//        if(accelerometer.accelerometer()){
-//            Intent intent=new Intent(MainActivity.this,MainActivity.class);
-//            startActivity(intent);
-//            finish();
-//    }
+        manager = (SensorManager) getApplicationContext().getSystemService(SENSOR_SERVICE);
+        mAccelerometer=manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+        accelerometer=new Accelerometer(getApplicationContext());
+
+        accelerometer.setOnShakeListener(new Accelerometer.OnShakeListener() {
+            @Override
+            public void onShake(int count) {
+                Toast.makeText(MainActivity.this,"ok",Toast.LENGTH_LONG).show();
+                Intent intent=new Intent(MainActivity.this,MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
        preferences=getSharedPreferences("app", Context.MODE_PRIVATE);
         editor=preferences.edit();
         if(preferences.getBoolean("status",false)){
@@ -78,10 +92,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                startActivity(intent);
                 break;
 
-
-
-
         }
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        manager.registerListener(accelerometer, mAccelerometer,SensorManager.SENSOR_DELAY_UI );
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        manager.registerListener(accelerometer, mAccelerometer,SensorManager.SENSOR_DELAY_UI );
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        manager.unregisterListener(accelerometer);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        manager.unregisterListener(accelerometer);
     }
 }

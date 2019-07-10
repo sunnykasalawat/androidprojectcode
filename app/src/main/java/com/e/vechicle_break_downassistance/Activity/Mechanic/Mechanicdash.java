@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
@@ -20,12 +22,17 @@ import com.e.vechicle_break_downassistance.Activity.User.Dashboard;
 import com.e.vechicle_break_downassistance.Fragments.Mechanic.Completedwork;
 import com.e.vechicle_break_downassistance.Fragments.Mechanic.MechDash;
 import com.e.vechicle_break_downassistance.R;
+import com.e.vechicle_break_downassistance.Sensor.Accelerometer;
 import com.e.vechicle_break_downassistance.Sensor.Proximity;
 
 public class Mechanicdash extends AppCompatActivity {
 
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
+    private SensorManager manager;
+    private Sensor mAccelerometer;
+    private Accelerometer accelerometer;
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -89,6 +96,19 @@ public class Mechanicdash extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         Proximity proximity=new Proximity(getApplicationContext());
         proximity.proximity();
+        manager = (SensorManager) getApplicationContext().getSystemService(SENSOR_SERVICE);
+        mAccelerometer=manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+        accelerometer=new Accelerometer(getApplicationContext());
+
+        accelerometer.setOnShakeListener(new Accelerometer.OnShakeListener() {
+            @Override
+            public void onShake(int count) {
+                Intent intent=new Intent(Mechanicdash.this,Mechanicdash.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         preferences=getSharedPreferences("app", Context.MODE_PRIVATE);
         editor=preferences.edit();
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
