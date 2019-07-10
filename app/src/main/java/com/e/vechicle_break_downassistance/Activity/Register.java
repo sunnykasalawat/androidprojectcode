@@ -1,6 +1,9 @@
 package com.e.vechicle_break_downassistance.Activity;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -8,15 +11,17 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,25 +42,28 @@ import com.e.vechicle_break_downassistance.URL.Url;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Register extends AppCompatActivity implements  View.OnClickListener {
+public class Register extends AppCompatActivity implements  View.OnClickListener{
 private EditText fullname,phone,email,address,username,password;
 private RadioGroup gender,usertype;
 private ImageView profileimage;
-private Button btnregister;
+private Button btnregister,btngetlocation;
 private TextView login;
 public String imagepath,imagenames;
     private SensorManager manager;
     private Sensor mAccelerometer;
     private Accelerometer accelerometer;
+
+    private static final int REQUEST_LOCATION = 1;
+    LocationManager locationManager;
+  public  String lattitude,longitude;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +83,7 @@ public String imagepath,imagenames;
             }
         });
 
+        ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
 
         fullname=findViewById(R.id.fullname);
         phone=findViewById(R.id.phone);
@@ -89,7 +98,8 @@ public String imagepath,imagenames;
         profileimage=findViewById(R.id.proimage_reg);
         profileimage.setOnClickListener(this);
         btnregister.setOnClickListener(this);
-
+        btngetlocation=findViewById(R.id.btnlocation);
+        btngetlocation.setOnClickListener(this);
         login=findViewById(R.id.alhaveaccnt);
         gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -104,6 +114,12 @@ public String imagepath,imagenames;
                 RadioButton radioButton=(RadioButton) radioGroup.findViewById(i);
             }
         });
+
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
+
+        }
     }
 
 
@@ -124,7 +140,7 @@ public String imagepath,imagenames;
                     String uname = username.getText().toString();
                     String pass = password.getText().toString();
                     SaveimageOnly();
-                    UserCUD userCUD = new UserCUD(name, gend.getText().toString(), Phone, Email, Address, uname, pass, usertyp.getText().toString(),imagenames);
+                    UserCUD userCUD = new UserCUD(name, gend.getText().toString(), Phone, Email, Address, uname, pass, usertyp.getText().toString(),imagenames,lattitude,longitude);
                     Strictmode.StrictMode();
                     registeruser reg = new registeruser(userCUD);
                    if( reg.registerusers()){
@@ -143,9 +159,84 @@ public String imagepath,imagenames;
                 }
                 open();
 
+                    break;
+            case R.id.btnlocation:
+                locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    buildAlertMessageNoGps();
+
+                } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    getLocation();
+                }
                 break;
         }
     }
+
+    private void getLocation() {
+        if (ActivityCompat.checkSelfPermission(Register.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
+                (Register.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(Register.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+
+        } else {
+            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+            Location location1 = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+            Location location2 = locationManager.getLastKnownLocation(LocationManager. PASSIVE_PROVIDER);
+
+            if (location != null) {
+                double latti = location.getLatitude();
+                double longi = location.getLongitude();
+                lattitude = String.valueOf(latti);
+                longitude = String.valueOf(longi);
+
+                Toast.makeText(Register.this,lattitude+" "+longitude,Toast.LENGTH_LONG).show();;
+
+            } else  if (location1 != null) {
+                double latti = location1.getLatitude();
+                double longi = location1.getLongitude();
+                lattitude = String.valueOf(latti);
+                longitude = String.valueOf(longi);
+                Toast.makeText(Register.this,lattitude+" "+longitude,Toast.LENGTH_LONG).show();;
+
+
+            } else  if (location2 != null) {
+                double latti = location2.getLatitude();
+                double longi = location2.getLongitude();
+                lattitude = String.valueOf(latti);
+                longitude = String.valueOf(longi);
+                Toast.makeText(Register.this,lattitude+" "+longitude,Toast.LENGTH_LONG).show();;
+
+            }else{
+
+                Toast.makeText(this,"Unble to Trace your location",Toast.LENGTH_SHORT).show();
+
+            }
+        }
+    }
+
+    protected void buildAlertMessageNoGps() {
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Please Turn ON your GPS Connection")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+
 
     private void open(){
         Intent gallery=new Intent(Intent.ACTION_PICK);
@@ -223,7 +314,14 @@ public String imagepath,imagenames;
             password.setError("Enter your Password");
             password.requestFocus();
             return false;
-        }else {
+        }else  if (TextUtils.isEmpty(lattitude)) {
+            Toast.makeText(Register.this,"locate the adress",Toast.LENGTH_LONG).show();
+        return false;
+    }else if (TextUtils.isEmpty(longitude)) {
+            Toast.makeText(Register.this,"locate the adress",Toast.LENGTH_LONG).show();
+
+            return false;
+    }else{
             return true;
 
         }

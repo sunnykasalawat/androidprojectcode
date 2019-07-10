@@ -1,9 +1,9 @@
 package com.e.vechicle_break_downassistance.Model.User;
 
 public class Mechanic_Data_GET {
-    private String _id,fullname, gender, phone, email, address, username, password, usertype,profilepic;
+    private String _id,fullname, gender, phone, email, address, username, password, usertype,profilepic,lattitude,longitude;
 
-    public Mechanic_Data_GET(String _id, String fullname, String gender, String phone, String email, String address, String username, String password, String usertype, String profilepic) {
+    public Mechanic_Data_GET(String _id, String fullname, String gender, String phone, String email, String address, String username, String password, String usertype, String profilepic, String lattitude, String longitude) {
         this._id = _id;
         this.fullname = fullname;
         this.gender = gender;
@@ -14,6 +14,8 @@ public class Mechanic_Data_GET {
         this.password = password;
         this.usertype = usertype;
         this.profilepic = profilepic;
+        this.lattitude = lattitude;
+        this.longitude = longitude;
     }
 
     public String get_id() {
@@ -94,6 +96,22 @@ public class Mechanic_Data_GET {
 
     public void setProfilepic(String profilepic) {
         this.profilepic = profilepic;
+    }
+
+    public String getLattitude() {
+        return lattitude;
+    }
+
+    public void setLattitude(String lattitude) {
+        this.lattitude = lattitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 }
 

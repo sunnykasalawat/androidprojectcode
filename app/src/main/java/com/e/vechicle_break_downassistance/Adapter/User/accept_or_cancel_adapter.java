@@ -6,9 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +18,10 @@ import android.widget.Toast;
 
 import com.e.vechicle_break_downassistance.Activity.User.Dashboard;
 import com.e.vechicle_break_downassistance.Busiiness_logic.Cancelreq;
-import com.e.vechicle_break_downassistance.Fragments.User.accept_or_cancel_view;
 import com.e.vechicle_break_downassistance.Interface.User.UserdashAPI;
+import com.e.vechicle_break_downassistance.MapsActivity;
 import com.e.vechicle_break_downassistance.Model.User.accorcacCUD;
+import com.e.vechicle_break_downassistance.Model.location;
 import com.e.vechicle_break_downassistance.R;
 import com.e.vechicle_break_downassistance.Strictmode.Strictmode;
 import com.e.vechicle_break_downassistance.URL.Url;
@@ -40,6 +39,7 @@ import retrofit2.Response;
 public class accept_or_cancel_adapter extends  RecyclerView.Adapter<accept_or_cancel_adapter.accocac_viewholder>{
     List<accorcacCUD> accorcacCUDList;
     Context context;
+    MapsActivity mapsActivity;
 
     public accept_or_cancel_adapter(List<accorcacCUD> accorcacCUDList, Context context) {
         this.accorcacCUDList = accorcacCUDList;
@@ -72,6 +72,19 @@ public class accept_or_cancel_adapter extends  RecyclerView.Adapter<accept_or_ca
         } catch (IOException e) {
             e.printStackTrace();
         }
+        accocac_viewholder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Double latitude=Double.parseDouble(accorcacCUD.getMechanicid().getLattitude());
+                Double longitutde=Double.parseDouble(accorcacCUD.getMechanicid().getLongitude());
+                String name=accorcacCUD.getMechanicid().getFullname();
+                Intent intent=new Intent(context,MapsActivity.class);
+                intent.putExtra("lat",latitude);
+                intent.putExtra("lon",longitutde);
+                intent.putExtra("name",name);
+                context.startActivity(intent);
+            }
+        });
         accocac_viewholder.accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,6 +109,7 @@ public class accept_or_cancel_adapter extends  RecyclerView.Adapter<accept_or_ca
 
             }
         });
+        
         accocac_viewholder.cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

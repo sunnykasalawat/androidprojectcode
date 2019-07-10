@@ -58,7 +58,7 @@ public class Mechanic_data_adapter extends RecyclerView.Adapter<Mechanic_data_ad
         final Mechanic_Data_GET mechanic_data_get=mechaniclistitem.get(i);
 
         mechanic_data_viewholder.fullname.setText(mechanic_data_get.getFullname());
-        mechanic_data_viewholder.address.setText(mechanic_data_get.getAddress());
+        mechanic_data_viewholder.address.setText(mechanic_data_get.getAddress()+" "+mechanic_data_get.getLattitude());
         mechanic_data_viewholder.phone.setText(mechanic_data_get.getPhone());
         Strictmode.StrictMode();
         String imgpath= Url.BASE_URL+"uploads/"+mechanic_data_get.getProfilepic();

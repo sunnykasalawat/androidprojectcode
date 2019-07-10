@@ -143,6 +143,12 @@
             app:srcCompat="@drawable/ic_launcher_foreground"
             android:id="@+id/proimage_reg"/>
         <Button
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/btnlocation"
+            android:text="GET LOcation"
+            ></Button>
+        <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20sp"
