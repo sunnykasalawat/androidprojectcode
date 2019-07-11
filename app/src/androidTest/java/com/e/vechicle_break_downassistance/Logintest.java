@@ -1,5 +1,7 @@
 package com.e.vechicle_break_downassistance;
 
+import android.content.Intent;
+
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
@@ -29,9 +31,6 @@ public class Logintest {
     onView(withId(R.id.textpassword)).perform(typeText("turtle"));
     closeSoftKeyboard();
     onView(withId(R.id.buttonlogin)).perform(click());
-
-
-
 
     }
 }
