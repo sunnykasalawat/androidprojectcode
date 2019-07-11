@@ -21,6 +21,7 @@ import com.e.vechicle_break_downassistance.Activity.MainActivity;
 import com.e.vechicle_break_downassistance.Activity.User.Dashboard;
 import com.e.vechicle_break_downassistance.Fragments.Mechanic.Completedwork;
 import com.e.vechicle_break_downassistance.Fragments.Mechanic.MechDash;
+import com.e.vechicle_break_downassistance.Fragments.User.profile;
 import com.e.vechicle_break_downassistance.R;
 import com.e.vechicle_break_downassistance.Sensor.Accelerometer;
 import com.e.vechicle_break_downassistance.Sensor.Proximity;
@@ -82,7 +83,9 @@ public class Mechanicdash extends AppCompatActivity {
                     builder.show();
                     return true;
                 case R.id.navigation_profile:
-
+                    profile profiles=new profile();
+                    fragmentTransaction.replace(R.id.Mechashboardframe,profiles);
+                    fragmentTransaction.commit();
                     return true;
             }
             return false;

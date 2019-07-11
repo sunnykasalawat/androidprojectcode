@@ -23,6 +23,7 @@ import com.e.vechicle_break_downassistance.MapsActivity;
 import com.e.vechicle_break_downassistance.Model.User.accorcacCUD;
 import com.e.vechicle_break_downassistance.Model.location;
 import com.e.vechicle_break_downassistance.R;
+import com.e.vechicle_break_downassistance.Service.Myservice;
 import com.e.vechicle_break_downassistance.Strictmode.Strictmode;
 import com.e.vechicle_break_downassistance.URL.Url;
 
@@ -77,11 +78,17 @@ public class accept_or_cancel_adapter extends  RecyclerView.Adapter<accept_or_ca
             public void onClick(View view) {
                 Double latitude=Double.parseDouble(accorcacCUD.getMechanicid().getLattitude());
                 Double longitutde=Double.parseDouble(accorcacCUD.getMechanicid().getLongitude());
-                String name=accorcacCUD.getMechanicid().getFullname();
+                String namees=accorcacCUD.getMechanicid().getFullname();
+
+                Intent startservice=new Intent(context,Myservice.class);
+                startservice.putExtra("lat",accorcacCUD.getMechanicid().getLattitude());
+                startservice.putExtra("lon",accorcacCUD.getMechanicid().getLongitude());
+                startservice.putExtra("name",namees);
+                context.startService(startservice);
                 Intent intent=new Intent(context,MapsActivity.class);
                 intent.putExtra("lat",latitude);
                 intent.putExtra("lon",longitutde);
-                intent.putExtra("name",name);
+                intent.putExtra("name",namees);
                 context.startActivity(intent);
             }
         });

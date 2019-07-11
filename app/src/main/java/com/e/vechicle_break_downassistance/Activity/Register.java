@@ -55,7 +55,9 @@ private RadioGroup gender,usertype;
 private ImageView profileimage;
 private Button btnregister,btngetlocation;
 private TextView login;
-public String imagepath,imagenames;
+public String imagepath="";
+
+public String imagenames="";
     private SensorManager manager;
     private Sensor mAccelerometer;
     private Accelerometer accelerometer;
@@ -329,30 +331,30 @@ public String imagepath,imagenames;
     private void SaveimageOnly(){
         if(imagepath.isEmpty()){
             Toast.makeText(this, "please select image", Toast.LENGTH_SHORT).show();
-            return;
+
+        }else {
+            File file = new File(imagepath);
+            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            MultipartBody.Part body = MultipartBody.Part.createFormData("imageFile", file.getName(), requestBody);
+
+            System.out.println(imagepath);
+            UserAPI userAPI = Url.getInstance().create(UserAPI.class);
+            Call<Imagemodel> responseBodycall = userAPI.UploadImage(body);
+
+            Strictmode.StrictMode();
+
+            try {
+                Response<Imagemodel> imagemodelResponse = responseBodycall.execute();
+
+                imagenames = imagemodelResponse.body().getFilename();
+
+
+            } catch (IOException e) {
+                Toast.makeText(this, "Error uploading image", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+
         }
-        File file = new File(imagepath);
-        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"),file);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("imageFile",file.getName(),requestBody);
-
-        System.out.println(imagepath);
-        UserAPI userAPI= Url.getInstance().create(UserAPI.class);
-        Call<Imagemodel> responseBodycall=userAPI.UploadImage(body);
-
-        Strictmode.StrictMode();
-
-        try {
-            Response<Imagemodel>   imagemodelResponse = responseBodycall.execute();
-
-            imagenames=imagemodelResponse.body().getFilename();
-
-
-        } catch (IOException e) {
-            Toast.makeText(this, "Error uploading image", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        }
-
-
     }
 
 }

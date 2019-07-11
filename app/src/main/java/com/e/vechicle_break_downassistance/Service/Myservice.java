@@ -1,6 +1,7 @@
 package com.e.vechicle_break_downassistance.Service;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
@@ -18,30 +19,45 @@ import com.e.vechicle_break_downassistance.R;
 
 public class Myservice extends Service implements LocationListener {
     private boolean isNotificationShown = false;
+    public String lat,lon;
+    public String namees;
+
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+        lat= intent.getStringExtra("lat");
+        lon=intent.getStringExtra("lon");
+        namees=intent.getStringExtra("name");
+
+        return super.onStartCommand(intent, flags, startId);
+    }
 
     @SuppressLint("MissingPermission")
     @Override
     public void onCreate() {
+
         LocationManager manager = (LocationManager) getSystemService(LOCATION_SERVICE);
         manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0, this);
 
     }
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+return  null;
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onLocationChanged(Location location) {
-        Location gymLocation = new Location("");
-        gymLocation.setLatitude(27.70);
-        gymLocation.setLongitude(85.33);
+        Location mechanicloc = new Location("");
+        mechanicloc.setLatitude(Double.parseDouble(lat));
+        mechanicloc.setLongitude(Double.parseDouble(lon));
 
-        if (location.distanceTo(gymLocation) < 200) {
+        if (location.distanceTo(mechanicloc) < 200) {
             if (isNotificationShown) return;
             isNotificationShown = true;
-            showNotification("Near to Gym", "aaipugne lageko awastha");
+            showNotification(namees, " You are Near");
         }
 
 
@@ -54,18 +70,18 @@ public class Myservice extends Service implements LocationListener {
 
             CharSequence name = "Channel1";
             String description = "This is channel 1";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel channel = new NotificationChannel("Channel1", name, importance);
             channel.setDescription(description);
             notificationManager.createNotificationChannel(channel);
         }
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "Channel1")
+        Notification builder = new NotificationCompat.Builder(this, "Channel1")
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle(title)
                 .setContentText(desc)
-                .setStyle(new NotificationCompat.BigTextStyle())
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-        notificationManager.notify(1, builder.build());
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .build();
+        notificationManager.notify(1, builder);
 
 
     }
@@ -83,5 +99,10 @@ public class Myservice extends Service implements LocationListener {
     @Override
     public void onProviderDisabled(String s) {
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

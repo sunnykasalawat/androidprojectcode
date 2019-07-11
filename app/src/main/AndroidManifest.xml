@@ -54,6 +54,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.MainActivity" />
+        <service android:name=".Service.Myservice"
+            android:enabled="true"></service>
     </application>
 
 </manifest>
