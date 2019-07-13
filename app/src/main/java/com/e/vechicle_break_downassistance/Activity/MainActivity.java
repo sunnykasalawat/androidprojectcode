@@ -38,8 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         accelerometer.setOnShakeListener(new Accelerometer.OnShakeListener() {
             @Override
             public void onShake(int count) {
-                Toast.makeText(MainActivity.this,"ok",Toast.LENGTH_LONG).show();
-                Intent intent=new Intent(MainActivity.this,MainActivity.class);
+                   Intent intent=new Intent(MainActivity.this,MainActivity.class);
                 startActivity(intent);
                 finish();
             }

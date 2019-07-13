@@ -43,5 +43,7 @@
         android:id="@+id/btnsignup"
        style="@style/MyCustomButton"
         />
+
     </LinearLayout>
+
 </LinearLayout>

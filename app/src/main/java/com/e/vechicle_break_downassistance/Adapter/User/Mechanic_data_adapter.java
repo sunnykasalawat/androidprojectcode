@@ -82,7 +82,7 @@ public class Mechanic_data_adapter extends RecyclerView.Adapter<Mechanic_data_ad
         Hire_mechanic_cud hire_mechanic_cud=new Hire_mechanic_cud(mechanicid,"Hire",userid);
         Strictmode.StrictMode();
         Hiremechanic hiremechanic=new Hiremechanic(hire_mechanic_cud);
-        if(hiremechanic.Hiremechanic()){
+        if(!hiremechanic.Hiremechanic()){
             Toast.makeText(context,"Mechanic Hried",Toast.LENGTH_LONG).show();
         }else{
 

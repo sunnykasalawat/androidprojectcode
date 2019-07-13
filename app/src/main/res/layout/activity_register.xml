@@ -158,7 +158,7 @@
             android:textColor="#000"
             android:id="@+id/btnregister"
             style="@style/MyCustomButton"/>
-        <TextView
+           <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30sp"
@@ -170,6 +170,7 @@
             android:id="@+id/alhaveaccnt"
             />
     </LinearLayout>
+
 
 
 </ScrollView>
